@@ -29,16 +29,42 @@ node server.js
 
 | 变量 | 说明 | 默认 |
 |------|------|------|
-| `PORT` | 监听端口 | `3000` |
+| `PORT` | 监听端口 | `51888` |
 | `SITE_NAME` | 站点名称 | `医保专栏` |
 | `ADMIN_PASSWORD` | 后台管理员密码（首次启动写入） | `admin123` |
 | `DATA_DIR` | 数据与上传文件目录 | `./data` |
 
-启动后访问：
-- 前台：http://localhost:3000
-- 后台：http://localhost:3000/admin.html （默认密码 `admin123`）
+启动后访问（默认端口 **51888**）：
+- 前台：http://localhost:51888
+- 后台：http://localhost:51888/admin.html （默认密码 `admin123`）
 
-> 修改默认密码：首次启动前设置 `ADMIN_PASSWORD`，或在 `data/db.json` 的 `settings.adminPasswordHash` 改为 `sha256(密码)` 的十六进制值。
+> 修改密码有三种方式：① 首次启动前设置 `ADMIN_PASSWORD` 环境变量；② 登录后台 →「修改密码」在线修改（推荐）；③ 手工把 `data/db.json` 的 `settings.adminPasswordHash` 改为 `sha256(密码)` 的十六进制值。
+
+## Docker 部署（推荐）
+
+```bash
+# 1) 复制环境变量模板，并修改里面的管理员密码
+cp .env.example .env
+
+# 2) 构建镜像并后台运行
+docker compose up -d --build
+
+# 3) 访问（端口取 .env 中的 PORT，默认 51888）
+#    前台 http://localhost:51888
+#    后台 http://localhost:51888/admin.html
+```
+
+常用命令：
+
+```bash
+docker compose ps         # 查看运行状态与健康检查
+docker compose logs -f    # 实时日志
+docker compose restart    # 重启
+docker compose down       # 停止并移除容器（数据卷保留）
+```
+
+数据持久化在命名卷 `medical_data`（容器内 `/app/data`），容器重建不丢失。
+Ubuntu 原生 systemd 部署、推送私有镜像仓库、Nginx 反代 HTTPS、备份与迁移等详见 [`deploy/部署指南.md`](deploy/部署指南.md)。
 
 ## 部署建议（内网）
 
@@ -67,13 +93,20 @@ data/
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
-| GET | `/api/public` | 站点名称 |
+| GET | `/api/public` | 站点名称、智能审核链接等公开配置 |
 | GET | `/api/notices` | 已发布通知 |
-| GET | `/api/resources?section=&catalogType=` | 已发布资源 |
+| GET | `/api/resources?section=&catalogType=` | 已发布资源（政策 / 目录 / 院内数据） |
+| GET | `/api/tools` | 已发布医保工具 |
 | GET | `/api/download/:id` | 下载文件 |
-| POST | `/api/login` | 后台登录 |
+| POST | `/api/login` | 后台登录，返回 token |
+| GET | `/api/admin/stats` | 统计信息 |
 | GET/POST | `/api/admin/notices` | 通知列表 / 发布 |
 | PUT/DELETE | `/api/admin/notices/:id` | 通知编辑 / 删除 |
 | GET/POST | `/api/admin/resources` | 资源列表 / 上传 |
 | PUT/DELETE | `/api/admin/resources/:id` | 资源编辑 / 删除 |
-| GET | `/api/admin/stats` | 统计信息 |
+| GET/POST | `/api/admin/tools` | 工具列表 / 新增 |
+| PUT/DELETE | `/api/admin/tools/:id` | 工具编辑 / 删除 |
+| GET/PUT | `/api/admin/settings` | 站点设置（如智能审核链接）读写 |
+| PUT | `/api/admin/password` | 修改管理员密码 |
+
+> `/api/admin/*` 需携带请求头 `x-admin-token: <登录返回的 token>`，否则返回 401。
