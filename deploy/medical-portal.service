@@ -1,0 +1,30 @@
+[Unit]
+Description=Hospital Medical Insurance Portal (医保专栏)
+After=network.target
+
+[Service]
+# 运行用户（setup.sh 会自动创建；也可改为 www-data）
+User=medical
+Group=medical
+
+# 项目根目录（按实际路径修改）
+WorkingDirectory=/opt/medical-portal
+
+# 启动命令
+ExecStart=/usr/bin/node /opt/medical-portal/server.js
+
+# 环境变量：端口、站点名、管理员密码、数据目录
+Environment=PORT=51888
+Environment=SITE_NAME=医保专栏
+Environment=ADMIN_PASSWORD=__CHANGE_ME__
+Environment=DATA_DIR=/opt/medical-portal/data
+
+# 进程守护
+Restart=always
+RestartSec=3
+# 防止日志爆炸
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+# 构建镜像时排除，不进入 build context
+node_modules
+npm-debug.log
+.workbuddy
+data
+.git
+.gitignore
+deploy
+*.md
+.env
+.env.example
+.dockerignore

@@ -1,0 +1,36 @@
+# 医院医保专栏 · Docker Compose 部署
+# 用法：
+#   1) 复制 .env.example 为 .env，并修改 ADMIN_PASSWORD 为强密码
+#   2) docker compose up -d --build
+#   3) 浏览器访问 http://<服务器IP>:51888/
+#
+# 说明：
+#   - 数据持久化在命名卷 medical_data（对应容器内 /app/data，含 db.json 与上传文件）
+#   - 端口 51888 映射到宿主机，按需修改左侧端口（如 "8080:51888"）
+#   - 想走 Nginx/HTTPS：把 51888 改为仅 "127.0.0.1:51888:51888"，再由 Nginx 反代
+
+services:
+  medical-portal:
+    build: .
+    # 镜像名：推送私有仓库时设置 REGISTRY 前缀（含末尾斜杠，如 registry.example.com/medical/）；留空则为本地镜像
+    image: "${REGISTRY:-}medical-portal:${TAG:-latest}"
+    container_name: medical-portal
+    restart: unless-stopped
+    ports:
+      - "${PORT:-51888}:51888"
+    environment:
+      - PORT=51888
+      - SITE_NAME=${SITE_NAME:-医保专栏}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+      - DATA_DIR=/app/data
+    volumes:
+      - medical_data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:51888/", "||", "exit", "1"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  medical_data:

@@ -1,0 +1,13 @@
+{
+  "name": "hospital-medical-insurance-portal",
+  "version": "1.0.0",
+  "description": "医院内部医保专栏：政策文件/通知/三大目录/院内数据分享，含后台发布功能",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "MIT"
+}

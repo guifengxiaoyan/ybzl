@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>医保专栏 · 后台管理</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+  <!-- 登录遮罩 -->
+  <div class="login-mask" id="loginMask">
+    <div class="login-box">
+      <h2>后台登录</h2>
+      <p>请输入管理员密码以发布和管理内容</p>
+      <div class="err" id="loginErr"></div>
+      <input type="password" id="pwd" placeholder="管理员密码" />
+      <button id="loginBtn">登录</button>
+    </div>
+  </div>
+
+  <!-- 主界面 -->
+  <div class="admin-wrap hidden" id="app">
+    <div class="admin-head">
+      <h1>医保专栏 · 后台管理</h1>
+      <span class="sp" id="who"></span>
+      <button class="btn-logout" id="logoutBtn">退出登录</button>
+    </div>
+
+    <div class="admin-stats" id="stats"></div>
+
+    <div class="admin-grid">
+      <!-- 左侧：发布表单 -->
+      <div class="panel">
+        <div class="tabs-admin" id="formTabs">
+          <button data-f="notice" class="active">发布通知</button>
+          <button data-f="file">上传文件</button>
+          <button data-f="audit">智能审核链接</button>
+          <button data-f="tool">发布工具</button>
+          <button data-f="pwd">修改密码</button>
+        </div>
+        <div id="formNotice">
+          <h3><span class="bar"></span>通知公告</h3>
+          <div class="form-row"><label>标题 *</label><input id="n_title" placeholder="如：关于调整门诊慢特病报销比例的通知" /></div>
+          <div class="form-row"><label>正文</label><textarea id="n_content" placeholder="通知内容…"></textarea></div>
+          <div class="form-row"><label>发布人</label><input id="n_author" value="医保办" /></div>
+          <div class="form-row"><label>日期</label><input id="n_date" type="date" /></div>
+          <div class="check-row"><input type="checkbox" id="n_pinned" /><label for="n_pinned" style="margin:0">置顶显示</label></div>
+          <div class="check-row"><input type="checkbox" id="n_pub" checked /><label for="n_pub" style="margin:0">立即发布</label></div>
+          <button class="btn btn-primary" id="n_submit" style="width:100%">发布通知</button>
+        </div>
+        <div id="formFile" class="hidden">
+          <h3><span class="bar"></span>文件发布</h3>
+          <div class="form-row"><label>所属栏目 *</label>
+            <select id="f_section">
+              <option value="policy">医保政策文件</option>
+              <option value="catalog">三大目录</option>
+              <option value="data">院内数据分享</option>
+            </select>
+          </div>
+          <div class="form-row" id="f_catalogWrap"><label>目录类型</label>
+            <select id="f_catalogType"><option>药品</option><option>诊疗项目</option><option>耗材</option></select>
+          </div>
+          <div class="form-row"><label>标题</label><input id="f_title" placeholder="默认使用文件名" /></div>
+          <div class="form-row"><label>说明</label><textarea id="f_desc" placeholder="简要说明文件内容…"></textarea></div>
+          <div class="form-row"><label>上传人</label><input id="f_uploader" value="医保办" /></div>
+          <div class="form-row"><label>选择文件 *</label><input type="file" id="f_file" /></div>
+          <div class="check-row"><input type="checkbox" id="f_pub" checked /><label for="f_pub" style="margin:0">立即发布</label></div>
+          <button class="btn btn-primary" id="f_submit" style="width:100%">上传并发布</button>
+        </div>
+        <div id="formAudit" class="hidden">
+          <h3><span class="bar"></span>智能审核数据反馈链接</h3>
+          <p style="font-size:13px;color:var(--muted);margin:-4px 0 14px;line-height:1.55">该链接将显示在前台首页「快捷入口」区（院内数据分享之后），用户点击后在新窗口打开。留空则前台点击时提示「尚未配置」。</p>
+          <div class="form-row"><label>链接网址</label><input id="audit_url" placeholder="https://example.com/audit （以 http:// 或 https:// 开头）" /></div>
+          <button class="btn btn-primary" id="audit_submit" style="width:100%">保存链接</button>
+        </div>
+        <div id="formTool" class="hidden">
+          <h3><span class="bar"></span>添加医保工具</h3>
+          <div class="form-row"><label>工具名称 *</label><input id="t_title" placeholder="如：医保报销计算器" /></div>
+          <div class="form-row"><label>图标</label><input id="t_icon" placeholder="🛠️ 单个 emoji，可留空" /></div>
+          <div class="form-row"><label>链接网址 *</label><input id="t_url" placeholder="https://...（以 http:// 或 https:// 开头）" /></div>
+          <div class="form-row"><label>说明</label><textarea id="t_desc" placeholder="简要说明工具用途…"></textarea></div>
+          <div class="check-row"><input type="checkbox" id="t_pub" checked /><label for="t_pub" style="margin:0">立即发布</label></div>
+          <button class="btn btn-primary" id="t_submit" style="width:100%">添加工具</button>
+        </div>
+        <div id="formPwd" class="hidden">
+          <h3><span class="bar"></span>修改管理员密码</h3>
+          <p style="font-size:13px;color:var(--muted);margin:-4px 0 14px;line-height:1.55">修改后请牢记新密码，下次登录前台后台均使用新密码。密码至少 6 位。</p>
+          <div class="form-row"><label>当前密码 *</label><input type="password" id="pwd_current" placeholder="请输入当前密码" /></div>
+          <div class="form-row"><label>新密码 *</label><input type="password" id="pwd_new" placeholder="至少 6 位" /></div>
+          <div class="form-row"><label>确认新密码 *</label><input type="password" id="pwd_confirm" placeholder="再次输入新密码" /></div>
+          <button class="btn btn-primary" id="pwd_submit" style="width:100%">保存新密码</button>
+        </div>
+      </div>
+
+      <!-- 右侧：列表管理 -->
+      <div class="panel">
+        <div class="tabs-admin" id="listTabs">
+          <button data-l="notices" class="active">通知管理</button>
+          <button data-l="policy">政策文件</button>
+          <button data-l="catalog">三大目录</button>
+          <button data-l="data">院内数据</button>
+          <button data-l="tools">工具管理</button>
+        </div>
+        <div id="listArea"><div class="empty">加载中…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+.admin-wrap { max-width: 1080px; margin: 0 auto; padding: 24px 20px 80px; }
+.admin-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.admin-head h1 { font-size: 22px; }
+.admin-head .sp { margin-left: auto; font-size: 13px; color: var(--muted); }
+.btn-logout { background: #fff; border: 1px solid var(--border); padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+.btn-logout:hover { background: #f4f7fb; }
+
+.admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 14px; margin-bottom: 22px; }
+.stat { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px; box-shadow: var(--shadow); }
+.stat .num { font-size: 28px; font-weight: 800; color: var(--primary); }
+.stat .lbl { font-size: 13px; color: var(--muted); }
+
+.admin-grid { display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; }
+@media (max-width: 860px) { .admin-grid { grid-template-columns: 1fr; } }
+
+.panel { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px; box-shadow: var(--shadow); }
+.panel h3 { font-size: 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.panel h3 .bar { width: 4px; height: 16px; background: var(--primary); border-radius: 2px; }
+
+.form-row { margin-bottom: 12px; }
+.form-row label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 5px; }
+.form-row input, .form-row textarea, .form-row select {
+  width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; background: #fff;
+}
+.form-row textarea { min-height: 80px; resize: vertical; }
+.form-row input:focus, .form-row textarea:focus, .form-row select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+.check-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); margin-bottom: 12px; }
+.check-row input { width: auto; }
+
+.tabs-admin { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.tabs-admin button { padding: 8px 14px; border: 1px solid var(--border); background: #fff; border-radius: 8px; cursor: pointer; font-size: 13px; color: var(--muted); }
+.tabs-admin button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table th, .table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.table th { color: var(--muted); font-weight: 600; background: #fafbfc; }
+.table .title-cell { max-width: 280px; }
+.table .mini { padding: 5px 10px; font-size: 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
+.mini.edit { background: var(--primary-light); color: var(--primary); }
+.mini.del { background: #ffebee; color: var(--danger); }
+.mini.pub { background: #e8f5e9; color: var(--ok); }
+.mini.unpub { background: #f5f5f5; color: var(--muted); }
+.row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.status-dot { font-size: 12px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+.status-dot.on { background: #e8f5e9; color: var(--ok); }
+.status-dot.off { background: #f5f5f5; color: var(--muted); }
+
+/* 登录遮罩 */
+.login-mask { position: fixed; inset: 0; background: rgba(13,71,161,.92); display: flex; align-items: center; justify-content: center; z-index: 100; }
+.login-box { background: #fff; border-radius: 14px; padding: 32px; width: 340px; box-shadow: 0 12px 40px rgba(0,0,0,.25); }
+.login-box h2 { font-size: 20px; margin-bottom: 6px; }
+.login-box p { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+.login-box input { width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; margin-bottom: 14px; }
+.login-box button { width: 100%; padding: 11px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; }
+.login-box .err { color: var(--danger); font-size: 13px; margin-bottom: 10px; min-height: 18px; }
+.hidden { display: none !important; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #323232; color: #fff; padding: 12px 22px; border-radius: 10px; font-size: 14px; z-index: 200; opacity: 0; transition: .25s; pointer-events: none; }
+.toast.show { opacity: 1; }

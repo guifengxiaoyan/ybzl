@@ -1,0 +1,17 @@
+# ===== 依赖 =====
+node_modules/
+
+# ===== 运行时数据（首次启动由 server.js 自动生成 db.json 与 uploads/，无需提交）=====
+data/
+
+# ===== 环境变量（可能含管理员密码，严禁提交；只提交 .env.example 模板）=====
+.env
+
+# ===== WorkBuddy 内部项目数据（非项目代码）=====
+.workbuddy/
+
+# ===== 系统 / 编辑器临时文件 =====
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
