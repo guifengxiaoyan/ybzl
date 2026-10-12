@@ -64,6 +64,10 @@ docker compose down       # 停止并移除容器（数据卷保留）
 ```
 
 数据持久化在命名卷 `medical_data`（容器内 `/app/data`），容器重建不丢失。
+
+> 📘 **新手或想看完整步骤**：详见 [`deploy/Docker部署详细步骤.md`](deploy/Docker部署详细步骤.md)
+> （含 Docker 安装、变量配置、健康检查验证、防火墙、备份/恢复/迁移、排错表、安全清单）。
+
 Ubuntu 原生 systemd 部署、推送私有镜像仓库、Nginx 反代 HTTPS、备份与迁移等详见 [`deploy/部署指南.md`](deploy/部署指南.md)。
 
 ## 部署建议（内网）

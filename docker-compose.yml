@@ -26,7 +26,8 @@ services:
     volumes:
       - medical_data:/app/data
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:51888/", "||", "exit", "1"]
+      # 注意：必须用字符串（shell）形式，列表 exec 形式不走 shell，|| 会被当成 wget 的参数导致检查必然失败
+      test: wget -qO- http://127.0.0.1:51888/ >/dev/null 2>&1 || exit 1
       interval: 30s
       timeout: 3s
       retries: 3
