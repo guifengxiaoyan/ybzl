@@ -29,20 +29,30 @@ function renderHome() {
   main.innerHTML = `
     <section class="hero">
       <div class="hero-grid"></div>
+      <div class="hero-scan"></div>
+      <div class="hud-corners"><i></i><i></i><i></i><i></i></div>
       <div class="hero-inner">
-        <div class="hero-badge">🏥 医院医疗保险管理服务平台</div>
-        <h1 id="heroTitle">医保专栏</h1>
-        <p>权威发布医保政策文件、通知公告与三大目录，安全共享院内医保数据</p>
-        <div class="hero-search">
-          <input id="search" placeholder="搜索通知、政策、目录、数据…" />
-          <button class="btn" id="heroSearchBtn">🔍 搜索</button>
+        <div class="hero-copy">
+          <div class="hero-badge"><span class="pulse-dot"></span> HOSPITAL MEDICAL INSURANCE · DATA HUB</div>
+          <h1 id="heroTitle">医保专栏</h1>
+          <p class="hero-sub">权威发布医保政策文件、通知公告与三大目录，安全共享院内医保数据</p>
+          <div class="hero-search">
+            <span class="hs-ico">⌕</span>
+            <input id="search" placeholder="搜索通知、政策、目录、数据…" />
+            <button class="btn" id="heroSearchBtn">检 索 <span>↵</span></button>
+          </div>
+          <div class="hero-tags"><span># 政策发布</span><span># 目录下载</span><span># 数据共享</span><span># 智能审核</span></div>
         </div>
-        <div class="hero-stats">
-          <div class="hs"><div class="hs-num" data-c="notices">0</div><div class="hs-lbl">通知公告</div></div>
-          <div class="hs"><div class="hs-num" data-c="policy">0</div><div class="hs-lbl">政策文件</div></div>
-          <div class="hs"><div class="hs-num" data-c="catalog">0</div><div class="hs-lbl">三大目录</div></div>
-          <div class="hs"><div class="hs-num" data-c="data">0</div><div class="hs-lbl">院内数据</div></div>
-          <div class="hs"><div class="hs-num" data-c="tools">0</div><div class="hs-lbl">医保工具</div></div>
+        <div class="hero-hud">
+          <div class="hud-bar"><span class="hud-dot"></span><span>DATA OVERVIEW / 数据总览</span><span class="hud-live">● LIVE</span></div>
+          <div class="hero-stats">
+            <div class="hs"><div class="hs-num" data-c="notices">0</div><div class="hs-lbl">通知公告</div></div>
+            <div class="hs"><div class="hs-num" data-c="policy">0</div><div class="hs-lbl">政策文件</div></div>
+            <div class="hs"><div class="hs-num" data-c="catalog">0</div><div class="hs-lbl">三大目录</div></div>
+            <div class="hs"><div class="hs-num" data-c="tools">0</div><div class="hs-lbl">医保工具</div></div>
+            <div class="hs"><div class="hs-num" data-c="data">0</div><div class="hs-lbl">院内数据</div></div>
+          </div>
+          <div class="hud-foot"><span></span> SYSTEM ONLINE · 医保数据实时同步 <span></span></div>
         </div>
       </div>
     </section>

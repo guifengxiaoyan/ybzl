@@ -3,16 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>医保专栏 · 医院医疗保险管理</title>
+  <title>医保专栏 · 医保数据中枢</title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
   <header class="topbar">
+    <div class="tb-glow"></div>
     <div class="inner">
-      <div class="logo">🏥</div>
-      <div>
+      <div class="logo"><span class="logo-core">🏥</span></div>
+      <div class="tb-title">
         <h1 id="siteName">医保专栏</h1>
-        <div class="sub">医院医疗保险管理</div>
+        <div class="sub">HOSPITAL MEDICAL INSURANCE · DATA HUB</div>
+      </div>
+      <div class="topbar-status">
+        <div class="sys"><span class="sys-dot"></span><span>系统运行正常</span><em>SYSTEM ONLINE</em></div>
+        <div class="clock" id="topClock">--:--:--</div>
       </div>
     </div>
   </header>
@@ -31,9 +36,23 @@
   <main class="container" id="main"></main>
 
   <footer>
-    <div>院内专用 · 医保数据请勿外传 · 由医保办维护</div>
+    <div class="f-line"><span class="f-dot"></span> 院内专用 · 医保数据请勿外传 · 由医保办维护 <span class="f-dot"></span></div>
+    <div class="f-line f-en">MEDICAL INSURANCE DATA HUB · INTERNAL USE ONLY</div>
   </footer>
 
   <script src="/js/app.js"></script>
+  <script>
+    (function () {
+      var el = document.getElementById('topClock');
+      if (!el) return;
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function tick() {
+        var d = new Date();
+        el.textContent = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) +
+          '  ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+      }
+      tick(); setInterval(tick, 1000);
+    })();
+  </script>
 </body>
 </html>
